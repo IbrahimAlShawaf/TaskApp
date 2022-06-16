@@ -1,10 +1,10 @@
 
 class Task {
    int? t_id;
-   final String t_name;
+   String t_name;
    final taskTime time;
+ Task({required this.t_id, required this.t_name, required this.time});
 
-  Task({ required this.t_name, required this.time});
 
 // Convert a Task into Map
   Map<String ,dynamic> toMap(){

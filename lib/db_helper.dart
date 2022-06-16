@@ -3,7 +3,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DBHelper{
   static Database? db;
-  //Constance for the feilds we need
+  //Constance for the fields we need
   static const String dbName= 'taskDB';
   static const String taskTable= 'taskTable';
   static const String t_name= 't_name';
@@ -23,8 +23,6 @@ class DBHelper{
     db = await initDatabase();
     return db! ;
   }
-
-
 
   // To initialize db and Create it
   initDatabase()async {
@@ -47,5 +45,4 @@ class DBHelper{
             "$dayName TEXT )"
     );
   }
-
 }

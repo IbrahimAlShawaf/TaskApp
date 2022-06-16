@@ -22,10 +22,23 @@ class DBQuery{
     taskTime time=  taskTime(day:myList[index]['t_day'], dayName:myList[index]['dayName'], month: myList[index]['t_month'],
         year:myList[index] ['t_year']);
 
-    return Task(t_name: myList[index]['t_name'], time: time);
+      return Task(t_id:  myList[index]['t_id'],t_name: myList[index]['t_name'], time: time);
     });
   }
 
+  // Update a Raw in DB
+Future<int> updateTask(Task tsk) async{
+    var dbClient = await dbHelper.datebase;
+    return await dbClient.update(DBHelper.taskTable,tsk.toMap(),
+        where: '${DBHelper.t_id} = ?', whereArgs: [tsk.t_id]);
+}
+
+
+//Delete a Raw in DB
+ Future<int> deleteTask(int id) async{
+    var dbClient= await dbHelper.datebase;
+    return await dbClient.delete(DBHelper.taskTable,where: '${DBHelper.t_id} = ?', whereArgs: [id]);
+ }
 
 
 }
