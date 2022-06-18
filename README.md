@@ -10,6 +10,12 @@ You can watch the episde n YouTube: https://youtu.be/zTU0AmY6nV4
 ![taskApp2](https://user-images.githubusercontent.com/36349126/173416792-4736ad47-f531-4808-84b9-4a665937396e.png)
 
 
+**Task App Part 3** with **SQLite** database, to update and delete a Raw in db, You can watch the episode on **YouTube** : https://youtu.be/_3YchnaslkA
+
+![delete](https://user-images.githubusercontent.com/36349126/174433848-962150cb-7cca-48cb-b584-a7abd2c547bf.png)
+
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
