@@ -35,8 +35,11 @@ class MyTaskTile extends StatelessWidget {
 
           title: Text(
             tsk.t_name.toString(), style: const TextStyle(fontSize: 20),),
-          subtitle: Text(' ${tsk.time.day}/ ${tsk.time.month}/'
-              ' ${tsk.time.year}', style: const TextStyle(fontSize: 17),),
+    subtitle: Text('Time : ${tsk.time.hour}:${tsk.time.minute} \n'
+        'Date: ${tsk.time.day}/ ${tsk.time.month}/'
+    ' ${tsk.time.year} ',
+
+            style: const TextStyle(fontSize: 17),),
         ),
       ),
     );

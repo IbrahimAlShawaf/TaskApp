@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:tasks_app/db_query.dart';
 import 'package:tasks_app/task_file.dart';
@@ -32,6 +33,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   late String? task;
   late DateTime? dateTime;
+  late TimeOfDay? timeOfDay;
   TextEditingController controller = TextEditingController();
   DBQuery dbQuery = DBQuery();
   late Future<List<Task>> myList;
@@ -41,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     myList = dbQuery.getAllTask();
     dateTime = null;
+    timeOfDay= null;
   }
 
   @override
@@ -92,8 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
         return Container(
             width: 250,
             height: 400,
-            margin: EdgeInsets.only(left: 8, right: 8),
-            decoration: BoxDecoration(
+            margin: const EdgeInsets.only(left: 8, right: 8),
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25),
@@ -101,11 +104,11 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.all(16),
+                  margin: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      Expanded(flex: 1, child: Text('Task Name:')),
-                      Expanded(
+                      const Expanded(flex: 1, child: Text('Task Name:')),
+                Expanded(
                         flex: 1,
                         child: TextField(
                           controller: controller,
@@ -121,23 +124,27 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.all(16),
+                  margin: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      Expanded(flex: 1, child: Text('Task Date')),
+                      const Expanded(flex: 1, child: Text('Task Date')),
                       Expanded(
                           flex: 1,
                           child: ElevatedButton(
-                            child: Text('Pick Date'),
+                            child: const Text('Pick Date'),
                             onPressed: () {
                               showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
-                                  firstDate: DateTime(2022),
-                                  lastDate: DateTime(2023))
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime(DateTime.now().year + 1))
                                   .then((value) {
+                                    showTimePicker(context: context, initialTime:
+                                    TimeOfDay(hour: TimeOfDay.now().hour, minute: TimeOfDay.now().minute)).
+                                    then((value) {setState(() {timeOfDay= value!;});print(value.toString());});
                                 setState(() {
                                   dateTime = value;
+
                                 });
                               });
                             },
@@ -148,9 +155,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 RawMaterialButton(
                     child: const Text('Add Task'),
                     onPressed: () {
-                      if (task != null && dateTime != null) {
+                     if (task != null && dateTime != null && timeOfDay !=null) {
                         setState(() {
-                          taskTime time = taskTime(day: dateTime!.day, dayName: dateTime!.day.toString(), month: dateTime!.month,
+                          taskTime time = taskTime(
+                             hour: timeOfDay!.hour,
+                              minute: timeOfDay!.minute,
+                              day: dateTime!.day,
+                              dayName: dateTime!.day.toString(),
+                              month: dateTime!.month,
                               year: dateTime!.year);
                           Task t = Task(t_id: null,t_name: task!, time: time);
                           dbQuery.SaveTask(t);
@@ -159,7 +171,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           myList = dbQuery.getAllTask();
                         });
                         Navigator.pop(context);
-                      } else {
+                      }
+                      else {
                         return;
                       }
                     })
@@ -216,8 +229,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
 
-  //
+  // Call this method when you need to remove a Task from db
   void deleteTask(int id){
     dbQuery.deleteTask(id);
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    controller.dispose();
+   dbQuery.closeDB();
+    super.dispose();
   }
 }

@@ -12,6 +12,8 @@ class DBHelper{
   static const String t_month = 't_month';
   static const String t_year = 't_year';
   static const String dayName = 'dayName';
+  static const String t_hour = 't_hour';
+  static const String t_minute = 't_minute';
   static String? path ;
 
 
@@ -42,6 +44,8 @@ class DBHelper{
             " $t_day INTEGER ,"
             "$t_month INTEGER ,"
             " $t_year INTEGER ,"
+            "$t_hour INTEGER ,"
+            " $t_minute INTEGER ,"
             "$dayName TEXT )"
     );
   }

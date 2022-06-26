@@ -15,6 +15,9 @@ class Task {
     map['t_month']= time.month;
     map['t_year']=time.year;
     map['dayName']=time.dayName;
+    map['t_hour']=time.hour;
+    map['t_minute']=time.minute;
+
     return map;
   }
 }
@@ -24,8 +27,11 @@ class taskTime{
   final int day;
   final int month;
   final int year;
+  final int hour;
+  final int minute;
   final String dayName;
-  taskTime({required this.day,required this.dayName ,required this.month , required this.year});
+  taskTime({ required this.hour, required this.minute,required this.day,required this.dayName,required this.month , required this.year});
+
 }
 
 

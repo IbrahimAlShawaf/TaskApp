@@ -19,7 +19,12 @@ class DBQuery{
     final List<Map<String, dynamic>> myList = await dbClient.query(DBHelper.taskTable);
     return List.generate(myList.length, (index)
     {
-    taskTime time=  taskTime(day:myList[index]['t_day'], dayName:myList[index]['dayName'], month: myList[index]['t_month'],
+    taskTime time=  taskTime(
+        hour: myList[index]['t_hour'],
+        minute: myList[index]['t_minute'],
+        day:myList[index]['t_day'],
+        dayName:myList[index]['dayName'],
+        month: myList[index]['t_month'],
         year:myList[index] ['t_year']);
 
       return Task(t_id:  myList[index]['t_id'],t_name: myList[index]['t_name'], time: time);
@@ -40,5 +45,8 @@ Future<int> updateTask(Task tsk) async{
     return await dbClient.delete(DBHelper.taskTable,where: '${DBHelper.t_id} = ?', whereArgs: [id]);
  }
 
-
+Future<void> closeDB()async{
+    print('Closing Database');
+    await DBHelper.db!.close();
+}
 }
